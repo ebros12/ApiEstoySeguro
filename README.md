@@ -1,7 +1,7 @@
 
 # ApiEstoySeguro
 
-Esta es la api para la integracion del espacio de Sandbox de SellerHub 
+Esta es la api para la integracion del espacio de Sandbox FLOW de SellerHub 
 
 -php artisan migrate
 -php artisan serv
