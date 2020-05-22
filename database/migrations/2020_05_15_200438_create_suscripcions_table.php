@@ -23,6 +23,7 @@ class CreateSuscripcionsTable extends Migration
             $table->string('customerId')->nullable();
             $table->string('created')->nullable();
             $table->string('subscription_start')->nullable();
+            $table->string('Estado')->default("pendiente");
         });
     }
 

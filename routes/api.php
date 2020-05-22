@@ -19,6 +19,8 @@ Route::apiResource("customerFlow","customerFlowController");
 
 Route::apiResource("suscripcion","SuscripcionController");
 
+Route::apiResource("confirmacion","ConfirmacionController");
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

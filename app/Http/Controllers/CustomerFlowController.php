@@ -96,7 +96,6 @@ class CustomerFlowController extends Controller
             $secretKey = env('secretKey');
             $base_uri_Flow = env('base_uri_Flow');
 
-
             $client = new Client([
                 // Base URI is used with relative requests
                 'base_uri' => $base_uri_Flow,
@@ -122,7 +121,7 @@ class CustomerFlowController extends Controller
             };
             $signature = hash_hmac('sha256', $toSign , $secretKey);
 
-            
+
             $response = $client->request('POST', $base_uri_Flow.'/api/customer/create', [
                 'form_params' => [
                 'apiKey' => $apiKey,
@@ -132,7 +131,7 @@ class CustomerFlowController extends Controller
                 's' => $signature,
                 ]
             ]);
-
+            
             $code = $response->getStatusCode(); // 200
             $order = json_decode($response->getBody(),true);
             
