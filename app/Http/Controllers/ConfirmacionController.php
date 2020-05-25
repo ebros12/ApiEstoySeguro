@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\confirmacion;
+use App\suscripcion;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use Mail;
 use Barryvdh\DomPDF\Facade as PDF;
+
 
 class ConfirmacionController extends Controller
 {
@@ -92,6 +94,45 @@ class ConfirmacionController extends Controller
             $confirmacionSave->paymentData = json_encode($coleccion['paymentData']);
             $confirmacionSave->merchantId = $coleccion['merchantId'];
             $confirmacionSave->save();
+
+
+
+            /* Actualizacion de la tabla Suscripcions */
+            $subscriptionId = substr($coleccion['commerceOrder'],0,14);
+            
+            $suscripcionActualizada = suscripcion::where("subscriptionId",$subscriptionId)->first();
+            
+            switch ($coleccion['status']) {
+                case 1:
+                    $suscripcionActualizada->Estado = "pendiente de pago";
+                    $suscripcionActualizada->EstadoID = $coleccion['status'];
+                    break;
+                case 2:
+                    $suscripcionActualizada->Estado = "pagada";
+                    $suscripcionActualizada->EstadoID = $coleccion['status'];
+                    break;
+                case 3:
+                    $suscripcionActualizada->Estado = "rechazada";
+                    $suscripcionActualizada->EstadoID = $coleccion['status'];
+                    break;
+                
+                case 4:
+                    $suscripcionActualizada->Estado = "anulada";
+                    $suscripcionActualizada->EstadoID = $coleccion['status'];
+                break;
+            }
+            
+            $suscripcionActualizada->flowOrder = $coleccion['flowOrder'];
+            
+            $suscripcionActualizada->save();
+
+
+
+
+
+
+
+
 
 /*          status integer
             El estado de la order
